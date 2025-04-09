@@ -12,21 +12,48 @@ const QuestionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!question.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a question before submitting",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
-    // Simulate submission delay
-    setTimeout(() => {
-      toast({
-        title: "Question Submitted!",
-        description: "We've received your question and will respond soon.",
+    try {
+      const response = await fetch("https://alexvaughn415.app.n8n.cloud/webhook-test/b6a355a6-1880-4f20-b34f-9779b2dcab02", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question }),
       });
       
-      // Reset form
-      setQuestion("");
+      if (response.ok) {
+        toast({
+          title: "Question Submitted!",
+          description: "We've received your question and will respond soon.",
+        });
+        setQuestion("");
+      } else {
+        throw new Error("Failed to submit question");
+      }
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your question. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error submitting question:", error);
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
