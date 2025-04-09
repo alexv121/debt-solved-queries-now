@@ -30,7 +30,7 @@ const QuestionForm = () => {
     setSolution("");
     
     try {
-      const response = await fetch("https://alexvaughn415.app.n8n.cloud/webhook-test/b6a355a6-1880-4f20-b34f-9779b2dcab02", {
+      const response = await fetch("https://alexvaughn415.app.n8n.cloud/webhook/b6a355a6-1880-4f20-b34f-9779b2dcab02", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
