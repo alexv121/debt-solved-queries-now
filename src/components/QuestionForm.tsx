@@ -3,14 +3,11 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send } from "lucide-react";
 
 const QuestionForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [question, setQuestion] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -27,8 +24,6 @@ const QuestionForm = () => {
       });
       
       // Reset form
-      setName("");
-      setEmail("");
       setQuestion("");
       setIsSubmitting(false);
     }, 1000);
@@ -44,35 +39,11 @@ const QuestionForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="name">Your Name</Label>
-              <Input
-                id="name"
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="john@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          
           <div className="space-y-2">
             <Label htmlFor="question">Your Question</Label>
             <Textarea
               id="question"
-              placeholder="Describe your debt situation and what you'd like to know..."
+              placeholder="Ask anything about your debt situation..."
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               className="min-h-[120px]"
